@@ -28,8 +28,7 @@ If you have Marmalade added as a repository to your Emacs, you can just install 
 
 ## Usage
 
-Enable *eagle-eye-mode* in any buffer to zoom out to the set level.
-Disabling the minor-mode will bring the text size back to normal.
+Enable *eagle-eye-mode* in any buffer to scale down the text in that buffer by set scale. Disabling the minor-mode will bring the text size back to normal.
 
     (eagle-eye-mode)
 
@@ -40,12 +39,12 @@ You can also set key-bindings to functions `eagle-eye-zoom-in' and
 
     (global-set-key (kbd "C-<") 'eagle-eye-zoom-out)
 
-The *eagle-eye* zoom level can be set as
+The *eagle-eye* text scaling can be set as
 
-    (eagle-eye-set-font-height 50)
+    (eagle-eye-set-text-scaling 5)
 
 Also, you can set the step by which zooming in and zooming out happens by
 
     (eagle-eye-set-zoom-step 10)
 
-By default, the *eagle-eye* zoom level is 50 and zoom step is 10.
+By default, the *eagle-eye* text scaling is 5 and zoom step is 10.

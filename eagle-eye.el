@@ -31,8 +31,8 @@
 ;;
 ;;     (require 'eagle-eye)
 ;;
-;; Enable eagle-eye-mode in any buffer to zoom out to the set level.
-;; Disabling the minor-mode will bring the text size back to normal.
+;; Enable eagle-eye-mode in any buffer to scale down the text in that buffer by
+;; set scale. Disabling the minor-mode will bring the text size back to normal.
 ;;
 ;;     (eagle-eye-mode)
 ;;
@@ -43,26 +43,26 @@
 ;;
 ;;     (global-set-key (kbd "C-<") 'eagle-eye-zoom-out)
 ;;
-;; The eagle-eye zoom level can be set as
+;; The eagle-eye text scaling can be set as
 ;;
-;;     (eagle-eye-set-font-height 50)
+;;     (eagle-eye-set-text-scaling 5)
 ;;
 ;; Also, you can set the step by which zooming in and zooming out happens by
 ;;
 ;;     (eagle-eye-set-zoom-step 10)
 ;;
-;; By default, the eagle-eye zoom level is 50 and zoom step is 10.
+;; By default, the eagle-eye text scaling is 5 and zoom step is 10.
 ;;
 
 ;;; Commentary:
 
 ;;     You can use this package to change the text-size across Emacs at once or
-;;     suddenly zoom out to get a eagle-eye view and then take it back to normal.
+;;     suddenly zoom out to get an eagle-eye view then take it back to normal.
 ;;
 ;;  Overview of features:
 ;;
 ;;     o   Change text size in steps
-;;     o   Temporarily zoom-out and then back to normal
+;;     o   Temporarily zoom-out and then get back to normal
 ;;
 
 ;;; Code:
@@ -70,16 +70,16 @@
 (defvar eagle-eye--saved-font-height
   nil)
 
-(defvar eagle-eye--tiny-font-height
-  50)
+(defvar eagle-eye--text-scaling
+  5)
 
 (defvar eagle-eye--font-zoom-step
   10)
 
 ;;;###autoload
-(defun eagle-eye-set-font-height (height)
-  (setq eagle-eye--tiny-font-height
-        height))
+(defun eagle-eye-set-text-scaling (scaling)
+  (setq eagle-eye--text-scaling
+        scaling))
 
 ;;;###autoload
 (defun eagle-eye-set-zoom-step (step)
@@ -91,20 +91,10 @@
   "Toggle eagle-eye-mode"
   :init-value nil
   :lighter " eagle-eye"
-  (cond (eagle-eye-mode (progn (setq eagle-eye--saved-font-height
-                                     (face-attribute 'default :height))
-                               (custom-set-faces
-                                `(default ((t (:height ,eagle-eye--tiny-font-height)))))
-                               (message (concatenate 'string
-                                                     "Zoomed to "
-                                                     (number-to-string eagle-eye--tiny-font-height)
-                                                     " percent"))))
-        (t (progn (custom-set-faces
-                   `(default ((t (:height ,eagle-eye--saved-font-height)))))
-                  (message (concatenate 'string
-                                        "Zoomed back to "
-                                        (number-to-string eagle-eye--saved-font-height)
-                                        " percent"))))))
+  (cond (eagle-eye-mode (progn (text-scale-adjust (- eagle-eye--text-scaling))
+                               (message "eagle-eye!")))
+        (t (progn (text-scale-adjust 0)
+                  (message "eagle-eye: Back to normal")))))
 ;;;###autoload
 (defun eagle-eye-zoom-out ()
   "Decreases font-size in steps"
