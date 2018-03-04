@@ -5,6 +5,8 @@
 
 A utility to zoom-in and zoom-out while editing text
 
+![Demo](images/demo.gif)
+
 ## Installation
 
 ### Manual
