@@ -89,7 +89,7 @@
 
 ;;;###autoload
 (define-minor-mode eagle-eye-mode
-  "Toggle eagle-eye-mode"
+  "Toggles eagle-eye-mode."
   :init-value nil
   :lighter " eagle-eye"
   (cond (eagle-eye-mode (progn (text-scale-adjust (- eagle-eye--text-scaling))
@@ -98,33 +98,29 @@
                   (message "eagle-eye: Back to normal")))))
 ;;;###autoload
 (defun eagle-eye-zoom-out ()
-  "Decreases font-size in steps"
+  "Decreases font-size in steps."
   (interactive)
   (let* ((current-font-height (face-attribute 'default :height))
          (decremented-font-height (- current-font-height
                                      eagle-eye--font-zoom-step)))
-    (cond ((> decremented-font-height
-              0) (progn (custom-set-faces
-                         `(default ((t (:height ,decremented-font-height)))))
-                        (message (concatenate 'string
-                                              "Zoomed out to "
-                                              (number-to-string decremented-font-height)
-                                              " percent"))))
+    (cond ((> decremented-font-height 0) (progn (custom-set-faces `(default ((t (:height ,decremented-font-height)))))
+                                                (message (concat "Zoomed out to "
+                                                                 (number-to-string decremented-font-height)
+                                                                 " percent"))))
           (t (message "Already at minimum zoom level")))))
 
 ;;;###autoload
 (defun eagle-eye-zoom-in ()
-  "Increases font-size in steps"
+  "Increases font-size in steps."
   (interactive)
   (let* ((current-font-height (face-attribute 'default :height))
          (incremented-font-height (+ current-font-height
                                      eagle-eye--font-zoom-step)))
     (custom-set-faces
      `(default ((t (:height ,incremented-font-height)))))
-    (message (concatenate 'string
-                          "Zoomed in to "
-                          (number-to-string incremented-font-height)
-                          " percent"))))
+    (message (concat "Zoomed in to "
+                     (number-to-string incremented-font-height)
+                     " percent"))))
 
 (provide 'eagle-eye)
 
